@@ -47,6 +47,57 @@ assumptionEqual(of(100).show(), String.of("100"));
 assumptionEqual(of(-100).show(), String.of("-100"));
 
 
+//= Int => (<=) :: Int -> Bool
+Int.prototype.$LESS$EQUAL = function(other) {
+    return this.value <= other.value;
+};
+assumptionEqual(of(10).$LESS$EQUAL(of(20)), true);
+assumptionEqual(of(10).$LESS$EQUAL(of(10)), true);
+assumptionEqual(of(10).$LESS$EQUAL(of(0)), false);
+
+
+//= Int => (<) :: Int -> Bool
+Int.prototype.$LESS = Ordered.default$LESS;
+assumptionEqual(of(10).$LESS(of(20)), true);
+assumptionEqual(of(10).$LESS(of(10)), false);
+assumptionEqual(of(10).$LESS(of(0)), false);
+
+
+//= Int => (>) :: Int -> Bool
+Int.prototype.$GREATER = Ordered.default$GREATER;
+assumptionEqual(of(10).$GREATER(of(20)), false);
+assumptionEqual(of(10).$GREATER(of(10)), false);
+assumptionEqual(of(10).$GREATER(of(0)), true);
+
+
+//= Int => (>=) :: Int -> Bool
+Int.prototype.$GREATER$EQUAL = Ordered.default$GREATER$EQUAL;
+assumptionEqual(of(10).$GREATER$EQUAL(of(20)), false);
+assumptionEqual(of(10).$GREATER$EQUAL(of(10)), true);
+assumptionEqual(of(10).$GREATER$EQUAL(of(0)), true);
+
+
+//= Int => compare :: Int -> Ordering
+Int.prototype.compare = Ordered.defaultCompare;
+assumptionEqual(of(10).compare(of(20)), Ordered.LT);
+assumptionEqual(of(10).compare(of(10)), Ordered.EQ);
+assumptionEqual(of(10).compare(of(0)), Ordered.GT);
+
+
+//= Int => min :: Int -> Bool
+Int.prototype.min = Ordered.defaultMin;
+assumptionEqual(of(10).min(of(20)), of(10));
+assumptionEqual(of(10).min(of(10)), of(10));
+assumptionEqual(of(10).min(of(0)), of(0));
+
+
+//= Int => max :: Int -> Bool
+Int.prototype.max = Ordered.defaultMax;
+assumptionEqual(of(10).max(of(20)), of(20));
+assumptionEqual(of(10).max(of(10)), of(10));
+assumptionEqual(of(10).max(of(0)), of(10));
+
+
 module.exports = {
     of
 };

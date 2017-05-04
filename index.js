@@ -1,24 +1,52 @@
+const Parity = mrequire("core:Data.Parity:1.0.0");
+const Visible = mrequire("core:Data.Visible:1.0.0");
+const Ordered = mrequire("core:Data.Ordered:1.0.0");
+const Number = mrequire("core:Data.Number:1.0.0");
+const Integer = mrequire("core:Data.Integer:1.0.0");
+
 const Maybe = mrequire("core:Data.Maybe:v1.0.0");
+const String = require("../mn-Data.String/index");
+
+const NativeInt = require("../mn-Data.Native.Int/index");
 
 
-//- Reads an Int from a `String` value. The number must parse as an integer and fall within the valid range of values
-//- for the `Int` type, otherwise `Nothing` is returned.
-//-
-//- fromString :: String -> Maybe Int
-function fromString(s) {
-    const result = parseInt(s);
-
-    if (isNaN(result)) {
-        return Maybe.Nothing;
-    } else {
-        return Maybe.Just(result);
-    }
+function Int(value) {
+    this.value = value;
 }
-assumption(fromString("123").withDefault(0) === 123);
-assumption(fromString("12abc").withDefault(0) === 12);
-assumption(fromString("abc").withDefault(0) === 0);
+
+
+//- Creates an `Integer` from a `Native Integer`.
+//= of :: Data.Native.Integer -> Integer
+const of = value =>
+    new Int(value);
+
+
+//- Tests whether or not the parameter has the same value as `this`.
+//= Integer => (==) :: Integer -> Bool
+Int.prototype.$EQUAL$EQUAL = function(other) {
+    return this.value === other.value;
+};
+assumptionEqual(of(100).$EQUAL$EQUAL(of(100)), true);
+assumptionEqual(of(100).$EQUAL$EQUAL(of(101)), false);
+
+
+//- Tests whether or not the parameter has a different value to `this`.
+//= Integer => (!=) :: Integer -> Bool
+Int.prototype.$NOT$EQUAL = Parity.default$NOT$EQUAL;
+assumptionEqual(of(100).$NOT$EQUAL(of(100)), false);
+assumptionEqual(of(100).$NOT$EQUAL(of(101)), true);
+
+
+//- Converts the `Int` to a visible `String` value.
+//= Int => show :: () -> String
+Int.prototype.show = function() {
+    return String.of(NativeInt.toString(this.value));
+};
+assumptionEqual(of(0).show(), String.of("0"));
+assumptionEqual(of(100).show(), String.of("100"));
+assumptionEqual(of(-100).show(), String.of("-100"));
 
 
 module.exports = {
-    fromString
+    of
 };

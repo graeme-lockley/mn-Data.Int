@@ -3,9 +3,9 @@ const Visible = mrequire("core:Data.Visible:1.0.0");
 const Ordered = mrequire("core:Data.Ordered:1.0.0");
 const Number = mrequire("core:Data.Number:1.0.0");
 const Bounded = mrequire("core:Data.Bounded:1.0.0");
-const Integer = mrequire("core:Data.Integer:1.0.0");
+const Integer = require("../mn-Data.Integer/index");
 
-const Maybe = mrequire("core:Data.Maybe:v1.0.0");
+const Maybe = mrequire("core:Data.Maybe:1.2.0");
 const String = require("../mn-Data.String/index");
 
 const NativeInt = require("../mn-Data.Native.Int/index");
@@ -157,16 +157,55 @@ assumptionEqual(of(0).toNative(), 0);
 assumptionEqual(of(10).toNative(), 10);
 
 
-Int.prototype.minBound = function() {
+//= Int => maxBound :: () -> Int
+Int.prototype.maxBound = function() {
     return of(2147483647);
 };
-assumptionEqual(of(10).minBound().toNative(), (Math.pow(2, 31) - 1) | 0);
+assumptionEqual(of(10).maxBound().toNative(), (Math.pow(2, 31) - 1) | 0);
 
 
+//= Int => minBound :: () -> Int
 Int.prototype.minBound = function() {
     return of(-2147483648);
 };
-assumptionEqual(Int.minBound().toNative(), -Math.pow(2, 31) | 0);
+assumptionEqual(of(10).minBound().toNative(), -Math.pow(2, 31) | 0);
+
+
+//= Int => (/) :: Int -> Maybe Int
+Int.prototype.$SLASH = function(denominator) {
+    if (denominator.value === 0) {
+        return Maybe.Nothing;
+    } else {
+        return Maybe.Just(of((this.value / denominator.value)| 0));
+    }
+};
+assumptionEqual(of(10).$SLASH(of(0)), Maybe.Nothing);
+assumptionEqual(of(10).$SLASH(of(3)), Maybe.Just(of(3)));
+assumptionEqual(of(10).$SLASH(of(-3)), Maybe.Just(of(-3)));
+assumptionEqual(of(-10).$SLASH(of(3)), Maybe.Just(of(-3)));
+assumptionEqual(of(-10).$SLASH(of(-3)), Maybe.Just(of(3)));
+
+
+
+//= Int => mod :: Int -> Maybe Int
+Int.prototype.mod = function(denominator) {
+    if (denominator.value === 0) {
+        return Maybe.Nothing;
+    } else {
+        return Maybe.Just(of((this.value % denominator.value)| 0));
+    }
+};
+assumptionEqual(of(10).mod(of(0)), Maybe.Nothing);
+assumptionEqual(of(10).mod(of(3)), Maybe.Just(of(1)));
+assumptionEqual(of(10).mod(of(-3)), Maybe.Just(of(1)));
+assumptionEqual(of(-10).mod(of(3)), Maybe.Just(of(-1)));
+assumptionEqual(of(-10).mod(of(-3)), Maybe.Just(of(-1)));
+
+
+//= Int => divMod :: Int -> Maybe (Int * Int)
+Int.prototype.divMod = Integer.defaultDivMod;
+assumptionEqual(of(10).divMod(of(0)), Maybe.Nothing);
+assumptionEqual(of(10).divMod(of(3)), Maybe.Just([of(3), of(1)]));
 
 
 module.exports = {

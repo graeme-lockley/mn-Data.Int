@@ -2,6 +2,7 @@ const Parity = mrequire("core:Data.Parity:1.0.0");
 const Visible = mrequire("core:Data.Visible:1.0.0");
 const Ordered = mrequire("core:Data.Ordered:1.0.0");
 const Number = mrequire("core:Data.Number:1.0.0");
+const Bounded = mrequire("core:Data.Bounded:1.0.0");
 const Integer = mrequire("core:Data.Integer:1.0.0");
 
 const Maybe = mrequire("core:Data.Maybe:v1.0.0");
@@ -23,7 +24,7 @@ const of = value =>
 
 //- Tests whether or not the parameter has the same value as `this`.
 //= Integer => (==) :: Integer -> Bool
-Int.prototype.$EQUAL$EQUAL = function(other) {
+Int.prototype.$EQUAL$EQUAL = function (other) {
     return this.value === other.value;
 };
 assumptionEqual(of(100).$EQUAL$EQUAL(of(100)), true);
@@ -39,7 +40,7 @@ assumptionEqual(of(100).$NOT$EQUAL(of(101)), true);
 
 //- Converts the `Int` to a visible `String` value.
 //= Int => show :: () -> String
-Int.prototype.show = function() {
+Int.prototype.show = function () {
     return String.of(NativeInt.toString(this.value));
 };
 assumptionEqual(of(0).show(), String.of("0"));
@@ -48,7 +49,7 @@ assumptionEqual(of(-100).show(), String.of("-100"));
 
 
 //= Int => (<=) :: Int -> Bool
-Int.prototype.$LESS$EQUAL = function(other) {
+Int.prototype.$LESS$EQUAL = function (other) {
     return this.value <= other.value;
 };
 assumptionEqual(of(10).$LESS$EQUAL(of(20)), true);
@@ -96,6 +97,76 @@ Int.prototype.max = Ordered.defaultMax;
 assumptionEqual(of(10).max(of(20)), of(20));
 assumptionEqual(of(10).max(of(10)), of(10));
 assumptionEqual(of(10).max(of(0)), of(10));
+
+
+//= Int => (+) :: Int -> Int
+Int.prototype.$PLUS = function (other) {
+    return of(this.value + other.value | 0);
+};
+assumptionEqual(of(10).$PLUS(of(20)), of(30));
+assumptionEqual(of(10).$PLUS(of(10)), of(20));
+assumptionEqual(of(10).$PLUS(of(0)), of(10));
+
+
+//= Int => (-) :: Int -> Int
+Int.prototype.$PLUS = function (other) {
+    return of(this.value - other.value | 0);
+};
+assumptionEqual(of(10).$PLUS(of(20)), of(-10));
+assumptionEqual(of(10).$PLUS(of(10)), of(0));
+assumptionEqual(of(10).$PLUS(of(0)), of(10));
+
+
+//= Int => negate :: () -> Int
+Int.prototype.negate = function () {
+    return of((-this.value) | 0);
+};
+assumptionEqual(of(-10).negate(), of(10));
+assumptionEqual(of(10).negate(), of(-10));
+assumptionEqual(of(0).negate(), of(0));
+
+
+//= Int => abs :: () -> Int
+Int.prototype.abs = function () {
+    return this.value < 0 ? of((-this.value) | 0) : this;
+};
+assumptionEqual(of(-10).abs(), of(10));
+assumptionEqual(of(10).abs(), of(10));
+assumptionEqual(of(0).abs(), of(0));
+
+
+//= Int => signum :: () -> Int
+Int.prototype.signum = function () {
+    return this.value < 0
+        ? of(-1)
+        : this.value === 0
+            ? this
+            : of(1);
+};
+assumptionEqual(of(-10).signum(), of(-1));
+assumptionEqual(of(10).signum(), of(1));
+assumptionEqual(of(0).signum(), of(0));
+
+
+//= Int => toNative :: () -> NativeInt
+Int.prototype.toNative = function () {
+    return this.value;
+};
+assumptionEqual(of(-10).toNative(), -10);
+assumptionEqual(of(0).toNative(), 0);
+assumptionEqual(of(10).toNative(), 10);
+
+
+Int.prototype.minBound = function() {
+    return of(2147483647);
+};
+assumptionEqual(of(10).minBound().toNative(), (Math.pow(2, 31) - 1) | 0);
+
+
+Int.prototype.minBound = function() {
+    return of(-2147483648);
+};
+assumptionEqual(Int.minBound().toNative(), -Math.pow(2, 31) | 0);
 
 
 module.exports = {

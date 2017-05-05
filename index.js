@@ -7,6 +7,7 @@ const Integer = require("../mn-Data.Integer/index");
 
 const Maybe = mrequire("core:Data.Maybe:1.2.0");
 const String = require("../mn-Data.String/index");
+const Tuple = mrequire("core:Data.Tuple:v1.0.0");
 
 const NativeInt = require("../mn-Data.Native.Int/index");
 
@@ -205,7 +206,7 @@ assumptionEqual(of(-10).mod(of(-3)), Maybe.Just(of(-1)));
 //= Int => divMod :: Int -> Maybe (Int * Int)
 Int.prototype.divMod = Integer.defaultDivMod;
 assumptionEqual(of(10).divMod(of(0)), Maybe.Nothing);
-assumptionEqual(of(10).divMod(of(3)), Maybe.Just([of(3), of(1)]));
+assumptionEqual(of(10).divMod(of(3)), Maybe.Just(Tuple(of(3))(of(1))));
 
 
 module.exports = {

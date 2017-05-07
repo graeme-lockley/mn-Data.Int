@@ -6,7 +6,7 @@ const Bounded = mrequire("core:Data.Bounded:1.0.0");
 const Integer = mrequire("core:Data.Integer:2.0.0");
 
 const Maybe = mrequire("core:Data.Maybe:1.2.0");
-const String = mrequire("core:Data.String:1.0.4");
+const String = mrequire("core:Data.String:1.1.0");
 const Tuple = mrequire("core:Data.Tuple:v1.0.0");
 
 const NativeInt = mrequire("core:Data.Native.Int:1.0.0");

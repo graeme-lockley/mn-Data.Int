@@ -3,7 +3,7 @@ const Unit = mrequire("core:Test.Unit:v1.0.0");
 
 const Maybe = mrequire("core:Data.Maybe:1.2.0");
 const Ordered = mrequire("core:Data.Ordered:1.0.0");
-const String = mrequire("core:Data.String:1.0.2");
+const String = mrequire("core:Data.String:1.0.4");
 const Tuple = mrequire("core:Data.Tuple:v1.0.0");
 
 const Int = require("../../index.js");

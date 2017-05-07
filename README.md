@@ -3,15 +3,15 @@
 ### of
 
 ```haskell
-of :: Data.Native.Integer -> Integer
+of :: Data.Native.Integer -> Int
 ```
 
-Creates an `Integer` from a `Native Integer`.
+Creates an `Int` from a `Native Integer`.
 
 ### (==)
 
 ```haskell
-Integer => (==) :: Integer -> Bool
+Int => (==) :: Int -> Bool
 ```
 
 Tests whether or not the parameter has the same value as `this`.
@@ -26,7 +26,7 @@ of(100).$EQUAL$EQUAL(of(101)) == false
 ### (!=)
 
 ```haskell
-Integer => (!=) :: Integer -> Bool
+Int => (!=) :: Int -> Bool
 ```
 
 Tests whether or not the parameter has a different value to `this`.
@@ -41,18 +41,10 @@ of(100).$NOT$EQUAL(of(101)) == true
 ### show
 
 ```haskell
-Int => show :: () -> String
+Int => show :: () -> Data.String
 ```
 
 Converts the `Int` to a visible `String` value.
-
-#### Examples:
-
-```haskell
-of(0).show() == String.of("0")
-of(100).show() == String.of("100")
-of(-100).show() == String.of("-100")
-```
 
 ### (<=)
 
@@ -320,7 +312,7 @@ Int => divMod :: Int -> Maybe (Int * Int)
 
 ```haskell
 of(10).divMod(of(0)) == Maybe.Nothing
-of(10).divMod(of(3)) == Maybe.Just([of(3), of(1)])
+of(10).divMod(of(3)) == Maybe.Just(Tuple(of(3))(of(1)))
 ```
 
 
@@ -331,4 +323,8 @@ of(10).divMod(of(3)) == Maybe.Just([of(3), of(1)])
 * [Data.Ordered (1.0.0)](https://github.com/graeme-lockley/mn-Data.Ordered)
 * [Data.Number (1.0.0)](https://github.com/graeme-lockley/mn-Data.Number)
 * [Data.Bounded (1.0.0)](https://github.com/graeme-lockley/mn-Data.Bounded)
+* [Data.Integer (2.0.0)](https://github.com/graeme-lockley/mn-Data.Integer)
 * [Data.Maybe (1.2.0)](https://github.com/graeme-lockley/mn-Data.Maybe)
+* [Data.String (1.0.0)](https://github.com/graeme-lockley/mn-Data.String)
+* [Data.Tuple (v1.0.0)](https://github.com/graeme-lockley/mn-Data.Tuple)
+* [Data.Native.Int (1.0.0)](https://github.com/graeme-lockley/mn-Data.Native.Int)

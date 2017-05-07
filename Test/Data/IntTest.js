@@ -3,7 +3,7 @@ const Unit = mrequire("core:Test.Unit:v1.0.0");
 
 const Maybe = mrequire("core:Data.Maybe:1.2.0");
 const Ordered = mrequire("core:Data.Ordered:1.0.0");
-const String = mrequire("core:Data.String:1.0.1");
+const String = mrequire("core:Data.String:1.0.2");
 const Tuple = mrequire("core:Data.Tuple:v1.0.0");
 
 const Int = require("../../index.js");
@@ -64,9 +64,9 @@ Unit.newSuite("Data.Int")
         Assert.deepEqual(of(10).$PLUS(of(0)), of(10));
     })
     .case("(-)", () => {
-        Assert.deepEqual(of(10).$PLUS(of(20)), of(-10));
-        Assert.deepEqual(of(10).$PLUS(of(10)), of(0));
-        Assert.deepEqual(of(10).$PLUS(of(0)), of(10));
+        Assert.deepEqual(of(10).$MINUS(of(20)), of(-10));
+        Assert.deepEqual(of(10).$MINUS(of(10)), of(0));
+        Assert.deepEqual(of(10).$MINUS(of(0)), of(10));
     })
     .case("negate", () => {
         Assert.deepEqual(of(-10).negate(), of(10));

@@ -6,7 +6,7 @@ const Bounded = mrequire("core:Data.Bounded:1.0.0");
 const Integer = mrequire("core:Data.Integer:2.0.0");
 
 const Maybe = mrequire("core:Data.Maybe:1.2.0");
-const String = mrequire("core:Data.String:1.0.1");
+const String = mrequire("core:Data.String:1.0.2");
 const Tuple = mrequire("core:Data.Tuple:v1.0.0");
 
 const NativeInt = mrequire("core:Data.Native.Int:1.0.0");
@@ -79,7 +79,7 @@ Int.prototype.$PLUS = function (other) {
 
 
 //= Int => (-) :: Int -> Int
-Int.prototype.$PLUS = function (other) {
+Int.prototype.$MINUS = function (other) {
     return of(this.value - other.value | 0);
 };
 

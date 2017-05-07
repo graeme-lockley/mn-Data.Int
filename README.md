@@ -1,5 +1,32 @@
 
 
+## Index
+
+[(!=)](#(!=))
+[(+)](#(+))
+[(-)](#(-))
+[(/)](#(/))
+[(<)](#(<))
+[(<=)](#(<=))
+[(==)](#(==))
+[(>)](#(>))
+[(>=)](#(>=))
+[abs](#abs)
+[compare](#compare)
+[divMod](#divmod)
+[max](#max)
+[maxBound](#maxbound)
+[min](#min)
+[minBound](#minbound)
+[mod](#mod)
+[negate](#negate)
+[of](#of)
+[show](#show)
+[signum](#signum)
+[toNative](#tonative)
+
+## Detail
+
 ### of
 
 ```haskell
@@ -168,6 +195,6 @@ Int => divMod :: Int -> Maybe (Int * Int)
 * [Data.Bounded (1.0.0)](https://github.com/graeme-lockley/mn-Data.Bounded)
 * [Data.Integer (2.0.0)](https://github.com/graeme-lockley/mn-Data.Integer)
 * [Data.Maybe (1.2.0)](https://github.com/graeme-lockley/mn-Data.Maybe)
-* [Data.String (1.0.1)](https://github.com/graeme-lockley/mn-Data.String)
+* [Data.String (1.1.0)](https://github.com/graeme-lockley/mn-Data.String)
 * [Data.Tuple (v1.0.0)](https://github.com/graeme-lockley/mn-Data.Tuple)
 * [Data.Native.Int (1.0.0)](https://github.com/graeme-lockley/mn-Data.Native.Int)
